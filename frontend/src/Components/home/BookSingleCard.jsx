@@ -12,20 +12,20 @@ const BookSingleCard = ({ book }) => {
 
   return (
     <>
-      <div className="border-2 border-gray-500 rounded-lg px-4 py-2 m-4 relative hover:shadow-xl">
-        <h2 className="absolute top-1 right-2 px-4 py-1 bg-red-300 rounded-lg">
+      <div className="border-2 border-gray-500 rounded-lg px-4 py-3 m-4 relative hover:shadow-xl w-full">
+        <h2 className="absolute top-2 right-3 px-3 py-1 bg-red-300 rounded-md text-sm">
           {new Date(book.publishedDate).getFullYear()}
         </h2>
-        <h3 className="my-2 text-gray-500">{book._id}</h3>
+        <h3 className="my-2 text-gray-500 truncate text-sm">{book._id}</h3>
 
         <div className="flex justify-start items-center gap-x-2">
           <PiBookOpenTextLight className="text-red-300 text-2xl" />
-          <h2 className="my-1">{book.title}</h2>
+          <h2 className="my-1 truncate font-medium">{book.title}</h2>
         </div>
 
         <div className="flex justify-start items-center gap-x-2">
           <BiUserCircle className="text-red-300 text-2xl" />
-          <h2 className="my-1">{book.author}</h2>
+          <h2 className="my-1 truncate text-sm">{book.author}</h2>
         </div>
 
         <div className="flex justify-between items-center gap-x-2 mt-4 p-4">
@@ -33,20 +33,21 @@ const BookSingleCard = ({ book }) => {
           <BsEye
             className="text-3xl text-blue-800 hover:text-black cursor-pointer"
             onClick={() => setShowModal(true)}
+            aria-label="Open details"
           />
 
           {/* Info */}
-          <Link to={`/books/details/${book._id}`}>
+          <Link to={`/books/details/${book._id}`} aria-label="Details">
             <BsInfoCircle className="text-2xl text-green-800 hover:text-black" />
           </Link>
 
           {/* Edit */}
-          <Link to={`/books/edit/${book._id}`}>
+          <Link to={`/books/edit/${book._id}`} aria-label="Edit">
             <AiOutlineEdit className="text-2xl text-yellow-600 hover:text-black" />
           </Link>
 
           {/* Delete */}
-          <Link to={`/books/delete/${book._id}`}>
+          <Link to={`/books/delete/${book._id}`} aria-label="Delete">
             <MdOutlineDelete className="text-2xl text-red-600 hover:text-black" />
           </Link>
         </div>

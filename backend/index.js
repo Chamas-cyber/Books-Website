@@ -1,9 +1,10 @@
-  import express, { response } from "express";
+  import express from "express";
   import mongoose from "mongoose";
   import dotenv from "dotenv";
   import { mongoURL } from "./config.js";
   import { Book } from "./models/bookModels.js";
   import bookRoutes from "./routes/booksroute.js";
+  import authRoutes from "./routes/auth.js";
   import cors from 'cors';
 
   dotenv.config();
@@ -11,13 +12,14 @@
   const app = express();
   app.use(
     cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
   })
   );
   app.use(express.json());
   app.use('/books', bookRoutes);
+  app.use('/auth', authRoutes);
   // ✅ Connect to MongoDB
   mongoose
     .connect(mongoURL)
@@ -112,7 +114,7 @@
       if(!result){
         return res.status(404).json({ message: "Book not found" });
       }
-      return response.status(200).json({ message: "Book updated successfully" });
+      return res.status(200).json({ message: "Book updated successfully" });
 
     }catch (error) {
       console.error(error);
@@ -127,7 +129,7 @@
       if(!result){
         return res.status(404).json({ message: "Book not found" });
       }
-      return response.status(200).json({ message: "Book deleted successfully" });
+      return res.status(200).json({ message: "Book deleted successfully" });
 
     }catch (error) {
       console.error(error);

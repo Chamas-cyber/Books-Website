@@ -10,7 +10,7 @@ const BookModal = ({ book, onClose }) => {
     >
       <div
         onClick={(event) => event.stopPropagation()}
-        className="w-[600px] max-w-full h-[400px] bg-white rounded-xl p-4 flex flex-col relative"
+        className="w-full max-w-[600px] max-h-[90vh] bg-white rounded-xl p-4 flex flex-col relative overflow-y-auto"
       >
         {/* ✅ fixed 'absolute' typo + import */}
         <AiOutlineClose
@@ -18,7 +18,7 @@ const BookModal = ({ book, onClose }) => {
           onClick={onClose}
         />
 
-        <h2 className="w-fit px-4 py-1 bg-red-300 rounded-lg">
+        <h2 className="inline-block px-3 py-1 bg-red-300 rounded-md text-sm">
           {new Date(book.publishedDate).getFullYear()}
         </h2>
 

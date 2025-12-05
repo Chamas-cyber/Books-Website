@@ -5,8 +5,9 @@ import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 import { BsInfoCircle } from "react-icons/bs";
 
 const BooksTable = ({ books }) => {
-    return (
-       <table className="w-full border-separate border-spacing-2">
+     return (
+      <div className="overflow-x-auto">
+       <table className="min-w-full w-full border-separate border-spacing-2">
           <thead>
             <tr>
               <th className="border border-slate-600 rounded-md">No</th>
@@ -54,6 +55,7 @@ const BooksTable = ({ books }) => {
             ))}
           </tbody>
         </table>
+      </div>
     );
 }
 export default BooksTable;

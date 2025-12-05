@@ -42,31 +42,39 @@ const EditBook = () => {
 
     setLoading(true);
     axios
-      .put(`http://localhost:5000/books/${id}`, data)
+      .put(`http://localhost:5000/books/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
       .then(() => {
         setLoading(false);
-        enqueueSnackbar("Book Edited Succefully", {variant:"success"})
-        navigate("/"); // go back to home after successful edit
-     
+        enqueueSnackbar("Book Edited Successfully", {variant:"success"});
+        // After successful edit go to the main page
+        navigate("/home");
       })
       .catch((err) => {
-        console.error("There was an error editing the book!", err);
         setLoading(false);
-        enqueueSnackbar("Error",{variant:"error"});
-
-
+        if (err.response && err.response.status === 401) {
+          enqueueSnackbar("Session expired. Please login again.", {variant:"error"});
+          localStorage.removeItem('token');
+          navigate("/");
+        } else {
+          console.error("There was an error editing the book!", err);
+          enqueueSnackbar("Error",{variant:"error"});
+        }
       });
   };
 
   return (
     <div className="p-4">
-      <BackButton />
+      <BackButton destination="/home" />
       <h1 className="text-3xl my-4">Edit Book</h1>
 
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex flex-col w-fit border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
+        <div className="w-full max-w-[600px] mx-auto border-2 border-sky-400 rounded-xl p-4">
           <div className="my-4">
             <label className="text-xl mr-4 text-gray-500">Title:</label>
             <input
@@ -98,7 +106,7 @@ const EditBook = () => {
           </div>
 
           <button
-            className="p-2 bg-sky-300 m-8"
+            className="p-2 bg-sky-300 m-8 w-full md:w-auto rounded-lg hover:bg-sky-500"
             onClick={handleEditBook}
           >
             Save Changes
