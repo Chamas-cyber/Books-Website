@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import BackButton from "../Components/BookButton";
 import Spinner from "../Components/Spinner.jsx";
 
@@ -8,6 +8,7 @@ const ShowBook = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -34,6 +35,25 @@ const ShowBook = () => {
         }
       });
   }, [id]); // ✅ close useEffect here
+
+  // Ensure browser Back button from this page always goes to /home
+  useEffect(() => {
+    // Push a new history entry so Back triggers a popstate while on this page
+    try {
+      window.history.pushState({ fromShow: true }, "");
+    } catch (e) {
+      // ignore (some browsers may restrict)
+    }
+
+    const onPop = (e) => {
+      navigate("/home");
+    };
+
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+    };
+  }, [navigate]);
 
   return (
     <div className="p-4">

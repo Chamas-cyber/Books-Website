@@ -12,10 +12,10 @@ const BooksTable = ({ books }) => {
             <tr>
               <th className="border border-slate-600 rounded-md">No</th>
               <th className="border border-slate-600 rounded-md">Title</th>
-              <th className="border border-slate-600 rounded-md max-md:hidden">
+              <th className="border border-slate-600 rounded-md hidden md:table-cell">
                 Author
               </th>
-              <th className="border border-slate-600 rounded-md max-md:hidden">
+              <th className="border border-slate-600 rounded-md hidden md:table-cell">
                 Published Date
               </th>
               <th className="border border-slate-600 rounded-md">Actions</th>
@@ -28,13 +28,18 @@ const BooksTable = ({ books }) => {
                 <td className="border border-slate-700 rounded-md text-center">
                   {index + 1}
                 </td>
-                <td className="border border-slate-700 rounded-md text-center">
-                  {book.title}
+                <td className="border border-slate-700 rounded-md text-left px-3">
+                  <div className="font-medium">{book.title}</div>
+                  {/* show author/date under the title on small screens */}
+                  <div className="block md:hidden text-sm text-gray-500 mt-1">
+                    <div>Author: {book.author}</div>
+                    <div>Published: {book.publishedDate}</div>
+                  </div>
                 </td>
-                <td className="border border-slate-700 rounded-md text-center max-md:hidden">
+                <td className="border border-slate-700 rounded-md text-center hidden md:table-cell">
                   {book.author}
                 </td>
-                <td className="border border-slate-700 rounded-md text-center max-md:hidden">
+                <td className="border border-slate-700 rounded-md text-center hidden md:table-cell">
                   {book.publishedDate}
                 </td>
 

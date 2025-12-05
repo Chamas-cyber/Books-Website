@@ -29,7 +29,7 @@ Create a .env file in your backend folder (e.g. /backend) based on .env.example 
 text
 MONGODB_URI=mongodb://localhost:27017/bookstore
 PORT=5000
-# If you have auth:
+
 JWT_SECRET=your_jwt_secret_here
 Make sure MongoDB is running locally or use a cloud connection string.
 
